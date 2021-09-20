@@ -1,24 +1,21 @@
-import { getRepository } from "typeorm";
 import { User } from "../models";
-
-export type UserCreatePayload = {
-  username: string;
-  password: string;
-};
+import {
+  createUser,
+  getUser,
+  getUsers,
+  UserCreatePayload,
+} from "../repositories/user";
 
 export default class UserController {
   public async getUsers(): Promise<User[]> {
-    const userRepository = getRepository(User);
-    return userRepository.find();
+    return getUsers();
+  }
+
+  public async getUser(userId: string): Promise<User | undefined> {
+    return getUser(Number(userId));
   }
 
   public async createUser(payload: UserCreatePayload): Promise<User> {
-    const userRepository = getRepository(User);
-    const user = new User();
-
-    console.log("creating user...");
-    console.log(payload.username, "\n", payload.password);
-
-    return userRepository.save({ ...user, ...payload });
+    return createUser(payload);
   }
 }
