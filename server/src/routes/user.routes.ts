@@ -23,8 +23,20 @@ userRouter.post("/", async (_req, res) => {
   const controller = new UserController();
   const payload: UserCreatePayload = _req.body;
 
-  const response = await controller.createUser(payload);
-  return res.send(response);
+  try {
+    const response = await controller.createUser(payload);
+    return res.status(201).json(response);
+  } catch (err: any) {
+    switch (err.code) {
+      case "username-taken":
+        res.status(403).json({ error: { message: "Username is taken" } });
+        break;
+
+      default:
+        res.status(500).json({ error: { message: "Internal server error" } });
+        break;
+    }
+  }
 });
 
 export default userRouter;

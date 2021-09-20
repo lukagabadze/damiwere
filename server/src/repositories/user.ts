@@ -16,9 +16,19 @@ export function getUser(userId: number): Promise<User | undefined> {
   return userRepository.findOne({ id: userId });
 }
 
-export function createUser(payload: UserCreatePayload): Promise<User> {
+export async function createUser(payload: UserCreatePayload): Promise<User> {
   const userRepository = getRepository(User);
   const user = new User();
+
+  const username = payload.username;
+
+  const userExists = await userRepository.find({ username });
+  if (userExists) {
+    console.log("user already exists", "\n", userExists);
+    throw { code: "username-taken" };
+  }
+
+  console.log("user does not exist, creating it now...");
 
   return userRepository.save({ ...user, ...payload });
 }

@@ -1,33 +1,60 @@
 <style>
-  #authWrapper {
-    max-width: 250px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  body {
+    font-family: "Sans-Serif";
   }
 
-  #authWrapper input {
+  .authWrapper {
+    max-width: 650px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .authWrapper input {
     font-size: 1em;
     margin: 0.8em 0;
     padding: 0.3em;
     border: none;
     border-bottom: 2px solid black;
   }
-  #authWrapper button {
+  .authWrapper button {
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: bold;
-    padding: 0.4em 0;
+    padding: 0.4em 0.8em;
     margin-top: 0.5em;
+  }
+
+  .header {
+    margin-bottom: 0;
+  }
+
+  #error {
+    color: red;
+    margin-top: 0;
   }
 </style>
 
-<h1>zd gabo</h1>
+<body>
+  <h1>zd gabo</h1>
 
-<form id="authWrapper">
-  <input type="text" name="username" placeholder="Username" />
-  <input type="password" name="password" placeholder="Password" />
-  <button>Submit</button>
-</form>
+  <div class="authWrapper">
+    <form id="authRegister">
+      <h1 class="header">Register</h1>
+      <input type="text" name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <p id="error"></p>
+      <button>Submit</button>
+    </form>
 
-<script src="views/auth.js"></script>
+    <form id="authLogin">
+      <h1 class="header">Login</h1>
+      <input type="text" name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <p id="error"></p>
+      <button>Submit</button>
+    </form>
+  </div>
+
+  <script src="views/auth.js"></script>
+</body>
