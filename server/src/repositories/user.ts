@@ -21,14 +21,17 @@ export async function createUser(payload: UserCreatePayload): Promise<User> {
   const user = new User();
 
   const username = payload.username;
+  const hashedPassword = await user.hashPassword(payload.password);
 
   const userExists = await userRepository.find({ username });
-  if (userExists) {
-    console.log("user already exists", "\n", userExists);
+  if (userExists.length) {
     throw { code: "username-taken" };
   }
 
-  console.log("user does not exist, creating it now...");
+  const data = {
+    username,
+    password: hashedPassword,
+  };
 
-  return userRepository.save({ ...user, ...payload });
+  return userRepository.save({ ...user, ...data });
 }

@@ -1,13 +1,13 @@
-const authForm = document.getElementById("authWrapper");
+const authRegisterForm = document.getElementById("authRegister");
 const authError = document.getElementById("error");
 
-authForm.onsubmit = (e) => {
+authRegisterForm.onsubmit = (e) => {
   e.preventDefault();
   console.log("form submitted!");
   authError.innerText = "";
 
-  const username = authForm.username.value;
-  const password = authForm.password.value;
+  const username = authRegisterForm.username.value;
+  const password = authRegisterForm.password.value;
   console.log(username, password);
 
   const payload = { username, password };
