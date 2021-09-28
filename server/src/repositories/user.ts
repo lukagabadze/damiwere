@@ -1,5 +1,6 @@
 import { getRepository } from "typeorm";
 import { User } from "../models";
+import { PublicUserInfo } from "../models/user";
 
 export type UserCreatePayload = {
   username: string;
@@ -16,22 +17,42 @@ export function getUser(userId: number): Promise<User | undefined> {
   return userRepository.findOne({ id: userId });
 }
 
-export async function createUser(payload: UserCreatePayload): Promise<User> {
+export async function createUser(
+  payload: UserCreatePayload
+): Promise<PublicUserInfo> {
   const userRepository = getRepository(User);
   const user = new User();
 
-  const username = payload.username;
-  const hashedPassword = await user.hashPassword(payload.password);
+  try {
+    const username = payload.username;
+    const hashedPassword = await user.hashPassword(payload.password);
 
-  const userExists = await userRepository.find({ username });
-  if (userExists.length) {
-    throw { code: "username-taken" };
+    if (!hashedPassword) {
+      throw { message: "Password hashin has failed" };
+    }
+
+    const userExists = await userRepository.find({ username });
+    if (userExists.length) {
+      throw { code: "username-taken" };
+    }
+
+    const data = {
+      username,
+      password: hashedPassword,
+    };
+    const savedUser = await userRepository.save({ ...user, ...data });
+
+    const accessToken = user.generateAccessToken(savedUser.id);
+    if (!accessToken) throw { message: "Could not generate access token" };
+
+    const publicUser: PublicUserInfo = {
+      username,
+      accessToken,
+    };
+
+    return publicUser;
+  } catch (err) {
+    console.log(err);
+    throw err;
   }
-
-  const data = {
-    username,
-    password: hashedPassword,
-  };
-
-  return userRepository.save({ ...user, ...data });
 }

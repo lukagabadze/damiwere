@@ -1,7 +1,9 @@
 ##################### SERVER #####################
-#dependencies
+# dependencies
 /server/node_modules
 
 # env variables
 /server/.env
 
+# misc
+/server/yarn-error.log

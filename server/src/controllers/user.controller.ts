@@ -1,4 +1,5 @@
 import { User } from "../models";
+import { PublicUserInfo } from "../models/user";
 import {
   createUser,
   getUser,
@@ -15,7 +16,7 @@ export default class UserController {
     return getUser(Number(userId));
   }
 
-  public async createUser(payload: UserCreatePayload): Promise<User> {
+  public async createUser(payload: UserCreatePayload): Promise<PublicUserInfo> {
     return createUser(payload);
   }
 }
