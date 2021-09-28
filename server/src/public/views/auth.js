@@ -41,13 +41,13 @@ authLoginForm.onsubmit = (e) => {
   e.preventDefault();
   errorRegister.innerText = "";
 
-  const username = authRegisterForm.username.value;
-  const password = authRegisterForm.password.value;
+  const username = authLoginForm.username.value;
+  const password = authLoginForm.password.value;
   console.log(username, password);
 
   const payload = { username, password };
 
-  fetch("./users", {
+  fetch("./users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

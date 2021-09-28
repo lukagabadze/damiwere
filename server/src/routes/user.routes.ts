@@ -1,6 +1,6 @@
 import express from "express";
 import { UserController } from "../controllers";
-import { UserCreatePayload } from "../repositories/user";
+import { UserCreatePayload, UserLoginPayload } from "../repositories/user";
 
 const userRouter = express.Router();
 
@@ -30,6 +30,44 @@ userRouter.post("/", async (_req, res) => {
     switch (err.code) {
       case "username-taken":
         res.status(403).json({ error: { message: "Username is taken" } });
+        break;
+
+      case "hash-failed":
+        res.status(500).json({
+          error: {
+            message: "Failed to hash the password, please try again later",
+          },
+        });
+
+      case "token-failed":
+        res.status(500).json({
+          error: {
+            message: "Failed to create necessary tokens, please try to login",
+          },
+        });
+
+      default:
+        res.status(500).json({ error: { message: "Internal server error" } });
+        break;
+    }
+  }
+});
+
+userRouter.post("/login", async (_req, res) => {
+  const controller = new UserController();
+  const payload: UserLoginPayload = _req.body;
+
+  try {
+    const response = await controller.loginUser(payload);
+    res.status(200).json(response);
+  } catch (err: any) {
+    switch (err.code) {
+      case "user-not-found":
+        res.status(404).json({ error: { message: "User not found" } });
+        break;
+
+      case "password-incorrect":
+        res.status(401).json({ error: { message: "Password is incorrect" } });
         break;
 
       default:

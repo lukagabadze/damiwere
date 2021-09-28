@@ -1,8 +1,13 @@
 import { getRepository } from "typeorm";
 import { User } from "../models";
 import { PublicUserInfo } from "../models/user";
+import bcrypt from "bcrypt";
 
 export type UserCreatePayload = {
+  username: string;
+  password: string;
+};
+export type UserLoginPayload = {
   username: string;
   password: string;
 };
@@ -28,7 +33,7 @@ export async function createUser(
     const hashedPassword = await user.hashPassword(payload.password);
 
     if (!hashedPassword) {
-      throw { message: "Password hashin has failed" };
+      throw { code: "hash-failed" };
     }
 
     const userExists = await userRepository.find({ username });
@@ -43,7 +48,7 @@ export async function createUser(
     const savedUser = await userRepository.save({ ...user, ...data });
 
     const accessToken = user.generateAccessToken(savedUser.id);
-    if (!accessToken) throw { message: "Could not generate access token" };
+    if (!accessToken) throw { code: "token-failed" };
 
     const publicUser: PublicUserInfo = {
       username,
@@ -55,4 +60,33 @@ export async function createUser(
     console.log(err);
     throw err;
   }
+}
+
+export async function loginUser(
+  payload: UserLoginPayload
+): Promise<PublicUserInfo> {
+  const userRepository = getRepository(User);
+
+  const username = payload.username;
+  const password = payload.password;
+
+  const user = await userRepository.findOne({ username });
+
+  if (!user) {
+    throw { code: "user-not-found" };
+  }
+
+  const userHashedPassword = user.password;
+
+  const passwordCorrect = await bcrypt.compare(password, userHashedPassword);
+
+  if (!passwordCorrect) throw { code: "password-incorrect" };
+
+  const accessToken = user.generateAccessToken(user.id);
+  const publicUserInfo: PublicUserInfo = {
+    username,
+    accessToken,
+  };
+
+  return publicUserInfo;
 }

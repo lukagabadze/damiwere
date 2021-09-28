@@ -4,7 +4,9 @@ import {
   createUser,
   getUser,
   getUsers,
+  loginUser,
   UserCreatePayload,
+  UserLoginPayload,
 } from "../repositories/user";
 
 export default class UserController {
@@ -18,5 +20,9 @@ export default class UserController {
 
   public async createUser(payload: UserCreatePayload): Promise<PublicUserInfo> {
     return createUser(payload);
+  }
+
+  public async loginUser(payload: UserLoginPayload): Promise<PublicUserInfo> {
+    return loginUser(payload);
   }
 }
