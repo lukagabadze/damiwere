@@ -29,7 +29,7 @@ authRegisterForm.onsubmit = (e) => {
       console.log(data);
 
       if (data.error) {
-        errorLogin.innerText = data.error.message;
+        errorRegister.innerText = data.error.message;
       }
     })
     .catch((err) => {
@@ -39,7 +39,7 @@ authRegisterForm.onsubmit = (e) => {
 
 authLoginForm.onsubmit = (e) => {
   e.preventDefault();
-  errorRegister.innerText = "";
+  errorLogin.innerText = "";
 
   const username = authLoginForm.username.value;
   const password = authLoginForm.password.value;
@@ -62,7 +62,7 @@ authLoginForm.onsubmit = (e) => {
       console.log(data);
 
       if (data.error) {
-        errorRegister.innerText = data.error.message;
+        errorLogin.innerText = data.error.message;
       }
     })
     .catch((err) => {

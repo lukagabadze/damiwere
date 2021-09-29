@@ -2,10 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Homework } from "./homework";
 
 export type PublicUserInfo = {
   username: string;
@@ -22,6 +24,9 @@ export class User {
 
   @Column()
   password!: string;
+
+  @OneToMany((_type) => Homework, (homework) => homework.user)
+  homeworks!: Homework[];
 
   @CreateDateColumn()
   createdAt!: Date;
