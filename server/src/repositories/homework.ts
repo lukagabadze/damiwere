@@ -13,6 +13,11 @@ export function getHomeworks(): Promise<Homework[]> {
   return homeworkRepository.find();
 }
 
+export async function getHomework(id: number): Promise<Homework | undefined> {
+  const homeworkRepository = getRepository(Homework);
+  return homeworkRepository.findOne({ id });
+}
+
 export function createHomework(
   payload: CreateHomeworkPayload
 ): Promise<Homework> {
