@@ -9,7 +9,7 @@ export default function Header(): ReactElement | null {
   }
 
   return (
-    <header className="flex justify-between fixed w-full bg-main-500 py-2  ">
+    <header className="flex justify-between w-full bg-main-500 py-2  ">
       <button className="text-2xl cursor-pointer mx-10 text-lg">
         დამიწერე
       </button>
@@ -28,7 +28,6 @@ export default function Header(): ReactElement | null {
           />
         </svg>
       </button>
-
       {menuOpen && <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />}
     </header>
   );
