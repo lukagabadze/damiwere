@@ -1,9 +1,9 @@
 import { UserAction, UserState } from ".";
 import * as userTypes from "./userTypes";
 
-const initialState = {
+const initialState: UserState = {
   loading: false,
-  user: { count: 0 },
+  user: null,
   error: "",
 };
 
@@ -13,12 +13,6 @@ const userReducer = (state = initialState, action: UserAction): UserState => {
       console.log("fetch user request / congratz");
       return {
         ...state,
-      };
-
-    case userTypes.INCREMENT:
-      return {
-        ...state,
-        user: { count: state.user.count + 1 },
       };
 
     default:
