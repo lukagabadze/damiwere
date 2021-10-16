@@ -20,3 +20,9 @@ export const fetchUserFailure = (error: UserError): UserAction => {
     error: error,
   };
 };
+
+export const emptyUser = (): UserAction => {
+  return {
+    type: userTypes.EMPTY_USER,
+  };
+};

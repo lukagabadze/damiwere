@@ -28,6 +28,13 @@ const userReducer = (state = defaultState, action: UserAction): UserState => {
         user: action.user!,
       };
 
+    case userTypes.EMPTY_USER:
+      console.log("empty dispatch");
+      return {
+        ...state,
+        user: null,
+      };
+
     default:
       console.log("default switch");
       return {

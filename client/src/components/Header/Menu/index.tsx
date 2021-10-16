@@ -2,6 +2,8 @@ import React, { ReactElement, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import MenuItem from "./MenuItem";
 import { LogoutSVG, UserSVG } from "../../../utils/svgs";
+import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { emptyUser } from "../../../store/user/userActions";
 
 interface Props {
   menuOpen: boolean;
@@ -13,6 +15,8 @@ export default function Menu({
   setMenuOpen,
 }: Props): ReactElement | null {
   const menuRef = useRef<HTMLDivElement | null>(null);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     function detectOutsideClick(e: MouseEvent) {
@@ -30,6 +34,12 @@ export default function Menu({
       window.removeEventListener("click", detectOutsideClick);
     };
   }, [setMenuOpen]);
+
+  function logoutHandler() {
+    console.log("gasvla");
+
+    dispatch(emptyUser());
+  }
 
   return (
     <AnimatePresence>
@@ -52,11 +62,7 @@ export default function Menu({
           <MenuItem name="ზდ გაბო" onClick={() => console.log("zd")} />
           <MenuItem name="ზდ გაბო" onClick={() => console.log("zd")} />
           <MenuItem name="ზდ გაბო" onClick={() => console.log("zd")} />
-          <MenuItem
-            name="გასვლა"
-            svg={LogoutSVG(5)}
-            onClick={() => console.log("gasvla")}
-          />
+          <MenuItem name="გასვლა" svg={LogoutSVG(5)} onClick={logoutHandler} />
         </motion.div>
       )}
     </AnimatePresence>
