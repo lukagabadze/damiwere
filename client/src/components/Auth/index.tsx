@@ -18,7 +18,7 @@ export default function Auth(): ReactElement | null {
 
 interface AuthFormProps {
   children: React.ReactNode;
-  onSubmit(): void;
+  onSubmit(args: any): void;
 }
 
 export function AuthForm({

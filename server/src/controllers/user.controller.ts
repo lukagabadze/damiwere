@@ -1,12 +1,13 @@
 import { User } from "../models";
-import { PublicUserInfo } from "../models/user";
 import {
   createUser,
   getUser,
   getUsers,
   loginUser,
   UserCreatePayload,
+  UserCreateResponse,
   UserLoginPayload,
+  UserLoginResponse,
 } from "../repositories/user";
 
 export default class UserController {
@@ -18,11 +19,15 @@ export default class UserController {
     return getUser(Number(userId));
   }
 
-  public async createUser(payload: UserCreatePayload): Promise<PublicUserInfo> {
+  public async createUser(
+    payload: UserCreatePayload
+  ): Promise<UserCreateResponse> {
     return createUser(payload);
   }
 
-  public async loginUser(payload: UserLoginPayload): Promise<PublicUserInfo> {
+  public async loginUser(
+    payload: UserLoginPayload
+  ): Promise<UserLoginResponse> {
     return loginUser(payload);
   }
 }

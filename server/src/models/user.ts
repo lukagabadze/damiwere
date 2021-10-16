@@ -10,8 +10,8 @@ import jwt from "jsonwebtoken";
 import { Homework } from "./homework";
 
 export type PublicUserInfo = {
+  id: number;
   username: string;
-  accessToken: string;
 };
 
 @Entity()

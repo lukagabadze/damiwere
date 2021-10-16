@@ -7,9 +7,18 @@ export type UserCreatePayload = {
   username: string;
   password: string;
 };
+export type UserCreateResponse = {
+  user: PublicUserInfo;
+  accessToken: string;
+};
+
 export type UserLoginPayload = {
   username: string;
   password: string;
+};
+export type UserLoginResponse = {
+  user: PublicUserInfo;
+  accessToken: string;
 };
 
 export function getUsers(): Promise<User[]> {
@@ -24,7 +33,7 @@ export function getUser(userId: number): Promise<User | undefined> {
 
 export async function createUser(
   payload: UserCreatePayload
-): Promise<PublicUserInfo> {
+): Promise<UserCreateResponse> {
   const userRepository = getRepository(User);
   const user = new User();
 
@@ -50,12 +59,15 @@ export async function createUser(
     const accessToken = user.generateAccessToken(savedUser.id);
     if (!accessToken) throw { code: "token-failed" };
 
-    const publicUser: PublicUserInfo = {
-      username,
+    const userCreateResponse: UserCreateResponse = {
+      user: {
+        id: savedUser.id,
+        username,
+      },
       accessToken,
     };
 
-    return publicUser;
+    return userCreateResponse;
   } catch (err) {
     console.log(err);
     throw err;
@@ -64,7 +76,7 @@ export async function createUser(
 
 export async function loginUser(
   payload: UserLoginPayload
-): Promise<PublicUserInfo> {
+): Promise<UserLoginResponse> {
   const userRepository = getRepository(User);
 
   const username = payload.username;
@@ -83,10 +95,13 @@ export async function loginUser(
   if (!passwordCorrect) throw { code: "password-incorrect" };
 
   const accessToken = user.generateAccessToken(user.id);
-  const publicUserInfo: PublicUserInfo = {
-    username,
+  const userLoginResponse: UserLoginResponse = {
+    user: {
+      id: user.id,
+      username,
+    },
     accessToken,
   };
 
-  return publicUserInfo;
+  return userLoginResponse;
 }
