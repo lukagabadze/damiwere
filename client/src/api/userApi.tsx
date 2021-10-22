@@ -1,6 +1,6 @@
 import axios from "axios";
 import { apiUrl } from ".";
-import { User } from "../store/user";
+import { User, UserError } from "../store/user";
 
 export type IUserLogin = {
   username: string;
@@ -8,12 +8,25 @@ export type IUserLogin = {
 };
 
 export type UserLoginResponse = {
-  data: {
-    user: User;
-    accessToken: string;
-  };
+  user: User;
+  accessToken: string;
 };
 
-export function login(body: IUserLogin): Promise<UserLoginResponse> {
-  return axios.post(`${apiUrl}/users/login`, body);
+export async function login(
+  body: IUserLogin
+): Promise<UserLoginResponse | UserError> {
+  try {
+    const res = await axios.post<UserLoginResponse>(
+      `${apiUrl}/users/login`,
+      body
+    );
+
+    return res.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return { message: err.message };
+    }
+
+    return { message: "Something went wrong" };
+  }
 }

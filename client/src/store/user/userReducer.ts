@@ -17,6 +17,7 @@ const userReducer = (state = defaultState, action: UserAction): UserState => {
         ...state,
         loading: false,
         error: action.error!,
+        user: null,
       };
 
     case userTypes.FETCH_USER_SUCCESS:

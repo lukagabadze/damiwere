@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useRef } from "react";
 import {
   AuthForm,
   AuthHeader,
@@ -8,9 +8,9 @@ import {
 } from ".";
 
 export default function Signup(): ReactElement | null {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRepeat, setPasswordRepeat] = useState("");
+  const usernameRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const passwordRepeatRef = useRef<HTMLInputElement | null>(null);
 
   function onSubmit() {}
 
@@ -18,19 +18,14 @@ export default function Signup(): ReactElement | null {
     <AuthForm onSubmit={onSubmit}>
       <AuthHeader header="რეგისტრაცია" />
 
-      <AuthInput value={username} setValue={setUsername} placehoder="სახელი" />
+      <AuthInput ref={usernameRef} placehoder="სახელი" />
+      <AuthInput ref={passwordRef} type="password" placehoder="პაროლი" />
       <AuthInput
-        value={password}
-        setValue={setPassword}
-        type="password"
-        placehoder="პაროლი"
-      />
-      <AuthInput
-        value={passwordRepeat}
-        setValue={setPasswordRepeat}
+        ref={passwordRepeatRef}
         type="password"
         placehoder="გაიმეორეთ პაროლი"
       />
+
       <AuthSubmitButton text="შეყვანა" />
 
       <AuthReferText

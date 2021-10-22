@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { MutableRefObject, ReactElement } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -44,33 +44,23 @@ export function AuthHeader({ header }: AuthHeaderProps): ReactElement | null {
 }
 
 interface AuthInputProps {
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  //ref: MutableRefObject<HTMLInputElement | null>;
   placehoder: string;
   type?: string;
 }
 
-export function AuthInput({
-  value,
-  setValue,
-  placehoder,
-  type = "text",
-}: AuthInputProps): ReactElement | null {
-  function inputChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    const newValue = e.currentTarget.value;
-    setValue(newValue);
+export const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
+  ({ type, placehoder }, ref) => {
+    return (
+      <input
+        ref={ref}
+        type={type}
+        placeholder={placehoder}
+        className="bg-transparent border-b-2 border-white text-lg my-5 py-2 px-1 focus:outline-none"
+      />
+    );
   }
-
-  return (
-    <input
-      type={type}
-      placeholder={placehoder}
-      value={value}
-      onChange={inputChangeHandler}
-      className="bg-transparent border-b-2 border-white text-lg my-5 py-2 px-1 focus:outline-none"
-    />
-  );
-}
+);
 
 interface AuthSubmitButtonProps {
   text: string;
