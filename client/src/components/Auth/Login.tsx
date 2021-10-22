@@ -1,4 +1,4 @@
-import { ReactElement, useRef, useState } from "react";
+import { ReactElement, useRef } from "react";
 import {
   AuthForm,
   AuthHeader,
@@ -8,7 +8,6 @@ import {
 } from ".";
 import { userApi } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { UserError } from "../../store/user";
 import {
   fetchUserFailure,
   fetchUserRequest,
@@ -22,7 +21,7 @@ export default function Login(): ReactElement | null {
   const userStore = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  console.log(userStore);
+  console.log("userStore + ", userStore);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,11 +34,15 @@ export default function Login(): ReactElement | null {
     dispatch(fetchUserRequest());
 
     const res = await userApi.login({ username, password });
-    console.log(res);
+    console.log("res ", res);
 
-    //dispatch(fetchUserSuccess(res.data.user));
-
-    //dispatch(fetchUserFailure({ message: err.message }));
+    if ("data" in res) {
+      console.log("SHEN SHIG XOM AR GAQVS SHEMTXVEVIT");
+      console.log(res.data);
+      dispatch(fetchUserSuccess(res.data.user));
+    } else {
+      dispatch(fetchUserFailure(res));
+    }
   }
 
   return (

@@ -63,15 +63,15 @@ userRouter.post("/login", async (_req, res) => {
   } catch (err: any) {
     switch (err.code) {
       case "user-not-found":
-        res.status(404).json({ error: { message: "User not found" } });
+        res.status(404).json({ message: "User not found" });
         break;
 
       case "password-incorrect":
-        res.status(401).json({ error: { message: "Password is incorrect" } });
+        res.status(401).json({ message: "Password is incorrect" });
         break;
 
       default:
-        res.status(500).json({ error: { message: "Internal server error" } });
+        res.status(500).json({ message: "Internal server error" });
         break;
     }
   }
