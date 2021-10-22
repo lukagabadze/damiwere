@@ -5,7 +5,7 @@ import {
   AuthInput,
   AuthReferText,
   AuthSubmitButton,
-} from ".";
+} from "./shared";
 
 export default function Signup(): ReactElement | null {
   const usernameRef = useRef<HTMLInputElement | null>(null);

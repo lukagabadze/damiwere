@@ -5,7 +5,7 @@ import {
   AuthInput,
   AuthReferText,
   AuthSubmitButton,
-} from ".";
+} from "./shared";
 import { userApi } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
