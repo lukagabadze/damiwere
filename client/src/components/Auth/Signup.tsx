@@ -25,10 +25,18 @@ export default function Signup(): ReactElement | null {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!usernameRef.current || !passwordRef.current) return;
+    if (
+      !usernameRef.current ||
+      !passwordRef.current ||
+      !passwordRepeatRef.current
+    )
+      return;
 
     const username = usernameRef.current.value;
     const password = passwordRef.current.value;
+    const passwordRepeat = passwordRepeatRef.current.value;
+
+    if (password !== passwordRepeat) return;
 
     dispatch(fetchUserRequest());
 
@@ -37,6 +45,10 @@ export default function Signup(): ReactElement | null {
     if ("data" in res) {
       console.log(res.data);
       dispatch(fetchUserSuccess(res.data.user));
+
+      usernameRef.current.value = "";
+      passwordRef.current.value = "";
+      passwordRepeatRef.current.value = "";
     } else {
       dispatch(fetchUserFailure(res));
     }

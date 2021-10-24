@@ -34,12 +34,12 @@ export default function Login(): ReactElement | null {
     dispatch(fetchUserRequest());
 
     const res = await userApi.login({ username, password });
-    console.log("res ", res);
 
     if ("data" in res) {
-      console.log("SHEN SHIG XOM AR GAQVS SHEMTXVEVIT");
-      console.log(res.data);
       dispatch(fetchUserSuccess(res.data.user));
+
+      usernameRef.current.value = "";
+      passwordRef.current.value = "";
     } else {
       dispatch(fetchUserFailure(res));
     }
