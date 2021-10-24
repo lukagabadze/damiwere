@@ -39,6 +39,7 @@ export default function Menu({
     console.log("gasvla");
 
     dispatch(emptyUser());
+    setMenuOpen(false);
   }
 
   return (

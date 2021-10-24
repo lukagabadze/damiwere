@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { ReactElement } from "react";
+import { Route, Switch } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
 
