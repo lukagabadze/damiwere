@@ -12,9 +12,13 @@ export type UserLoginResponse = {
   accessToken: string;
 };
 
+export type UserSignupResponse = {
+  user: User;
+  accessToken: string;
+};
+
 export async function login(
   body: IUserLogin
-  //): Promise<UserLoginResponse | UserError> {
 ): Promise<AxiosResponse<UserLoginResponse> | UserError> {
   try {
     const res = await axios.post<UserLoginResponse>(
@@ -27,8 +31,24 @@ export async function login(
     if (axios.isAxiosError(err)) {
       const error = err as AxiosError<UserError>;
       if (error && error.response) {
-        //console.log("response test - ", error.response.data);
-        //return { message: err.response.message };
+        return error.response.data;
+      }
+    }
+
+    return { message: "Something went wrong" };
+  }
+}
+
+export async function signup(
+  body: IUserLogin
+): Promise<AxiosResponse<UserSignupResponse> | UserError> {
+  try {
+    const res = await axios.post<UserLoginResponse>(`${apiUrl}/users`, body);
+    return res;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const error = err as AxiosError<UserError>;
+      if (error && error.response) {
         return error.response.data;
       }
     }
