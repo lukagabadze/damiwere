@@ -1,4 +1,4 @@
-import { ReactElement, useRef } from "react";
+import { ReactElement, useRef, useState } from "react";
 import {
   AuthForm,
   AuthHeader,
@@ -7,30 +7,29 @@ import {
   AuthSubmitButton,
 } from "./shared";
 import { userApi } from "../../api";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch } from "../../hooks/reduxHooks";
 import {
   fetchUserFailure,
   fetchUserRequest,
   fetchUserSuccess,
 } from "../../store/user/userActions";
+import AuthError from "./shared/AuthError";
 
 export default function Login(): ReactElement | null {
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [error, setError] = useState("");
 
-  const userStore = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-
-  console.log("userStore + ", userStore);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!usernameRef.current || !passwordRef.current) return;
+    const username = usernameRef.current?.value;
+    const password = passwordRef.current?.value;
+    if (!username || !password) return;
 
-    const username = usernameRef.current.value;
-    const password = passwordRef.current.value;
-
+    setError("");
     dispatch(fetchUserRequest());
 
     const res = await userApi.login({ username, password });
@@ -38,10 +37,11 @@ export default function Login(): ReactElement | null {
     if ("data" in res) {
       dispatch(fetchUserSuccess(res.data.user));
 
-      usernameRef.current.value = "";
-      passwordRef.current.value = "";
+      usernameRef.current!.value = "";
+      passwordRef.current!.value = "";
     } else {
       dispatch(fetchUserFailure(res));
+      setError(res.message);
     }
   }
 
@@ -51,6 +51,7 @@ export default function Login(): ReactElement | null {
 
       <AuthInput ref={usernameRef} placehoder="სახელი" />
       <AuthInput ref={passwordRef} type="password" placehoder="პაროლი" />
+      <AuthError error={error} />
       <AuthSubmitButton text="შეყვანა" />
 
       <AuthReferText

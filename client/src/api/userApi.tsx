@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { apiUrl } from ".";
-import { User, UserError } from "../store/user";
+import { defaultError, User, UserError } from "../store/user";
 
 export type IUserLogin = {
   username: string;
@@ -35,7 +35,7 @@ export async function login(
       }
     }
 
-    return { message: "Something went wrong" };
+    return defaultError;
   }
 }
 
@@ -53,6 +53,6 @@ export async function signup(
       }
     }
 
-    return { message: "Something went wrong" };
+    return defaultError;
   }
 }

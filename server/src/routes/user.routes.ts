@@ -29,7 +29,7 @@ userRouter.post("/", async (_req, res) => {
   } catch (err: any) {
     switch (err.code) {
       case "username-taken":
-        res.status(403).json({ error: { message: "Username is taken" } });
+        res.status(403).json({ message: "სახელი დაკავებულია" });
         break;
 
       case "hash-failed":
@@ -47,7 +47,7 @@ userRouter.post("/", async (_req, res) => {
         });
 
       default:
-        res.status(500).json({ error: { message: "Internal server error" } });
+        res.status(500).json({ message: "სერვერი დაზიანებულია" });
         break;
     }
   }
@@ -63,15 +63,15 @@ userRouter.post("/login", async (_req, res) => {
   } catch (err: any) {
     switch (err.code) {
       case "user-not-found":
-        res.status(404).json({ message: "User not found" });
+        res.status(404).json({ message: "სახელი ვერ მოიძებნა" });
         break;
 
       case "password-incorrect":
-        res.status(401).json({ message: "Password is incorrect" });
+        res.status(401).json({ message: "მითითებული პაროლი არასწორია" });
         break;
 
       default:
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ message: "სერვერი დაზიანებულია" });
         break;
     }
   }
