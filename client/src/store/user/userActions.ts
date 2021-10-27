@@ -1,4 +1,6 @@
 import { User, UserAction, UserError } from ".";
+import { AppDispatch } from "..";
+import { userApi } from "../../api";
 import * as userTypes from "./userTypes";
 
 export const fetchUserRequest = (): UserAction => {
@@ -26,3 +28,13 @@ export const emptyUser = (): UserAction => {
     type: userTypes.EMPTY_USER,
   };
 };
+
+export async function fetchUser() {
+  return async (dispatch: AppDispatch) => {
+    dispatch(fetchUserRequest());
+    try {
+    } catch (err) {
+      //dispatch(fetchUserFailure(err));
+    }
+  };
+}

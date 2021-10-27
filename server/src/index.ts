@@ -5,6 +5,7 @@ require("dotenv").config();
 import { createConnection } from "typeorm";
 import Router from "./routes";
 import dbConfig from "./config/database";
+import checkAuth from "./middleware/checkAuth";
 
 const app: Application = express();
 
@@ -13,6 +14,9 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 app.use(cors());
+
+// custom middleware
+app.use(checkAuth);
 
 createConnection(dbConfig)
   .then(() => {

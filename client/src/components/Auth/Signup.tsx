@@ -14,6 +14,7 @@ import {
   AuthSubmitButton,
 } from "./shared";
 import AuthError from "./shared/AuthError";
+import { saveTokens } from "./utils/saveTokens";
 
 export default function Signup(): ReactElement | null {
   const usernameRef = useRef<HTMLInputElement | null>(null);
@@ -43,6 +44,7 @@ export default function Signup(): ReactElement | null {
 
     if ("data" in res) {
       dispatch(fetchUserSuccess(res.data.user));
+      saveTokens(res.data.accessToken);
 
       usernameRef.current!.value = "";
       passwordRef.current!.value = "";

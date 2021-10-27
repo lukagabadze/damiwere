@@ -1,6 +1,6 @@
 import express from "express";
 import { UserController } from "../controllers";
-import { UserCreatePayload, UserLoginPayload } from "../repositories/user";
+import { UserCreatePayload, UserLoginPayload } from "../repositories/user.repo";
 
 const userRouter = express.Router();
 

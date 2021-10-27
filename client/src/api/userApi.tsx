@@ -7,6 +7,8 @@ export type IUserLogin = {
   password: string;
 };
 
+export type UserGetResponse = User;
+
 export type UserLoginResponse = {
   user: User;
   accessToken: string;
@@ -16,6 +18,28 @@ export type UserSignupResponse = {
   user: User;
   accessToken: string;
 };
+
+export async function getUser(): Promise<
+  AxiosResponse<UserGetResponse> | UserError
+> {
+  try {
+    const res = await axios.get<User>(`${apiUrl}/auth`);
+
+    console.log(res);
+
+    return res;
+  } catch (err) {
+    console.log(err);
+    if (axios.isAxiosError(err)) {
+      const error = err as AxiosError<UserError>;
+      if (error && error.response) {
+        return error.response.data;
+      }
+    }
+
+    return defaultError;
+  }
+}
 
 export async function login(
   body: IUserLogin

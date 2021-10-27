@@ -4,7 +4,7 @@ import {
   CreateHomeworkPayload,
   getHomework,
   getHomeworks,
-} from "../repositories/homework";
+} from "../repositories/homework.repo";
 
 export default class HomeworkController {
   public getHomeworks(): Promise<Homework[]> {

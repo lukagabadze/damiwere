@@ -8,7 +8,7 @@ import {
   UserCreateResponse,
   UserLoginPayload,
   UserLoginResponse,
-} from "../repositories/user";
+} from "../repositories/user.repo";
 
 export default class UserController {
   public async getUsers(): Promise<User[]> {
