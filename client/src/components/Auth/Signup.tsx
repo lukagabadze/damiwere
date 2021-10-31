@@ -42,6 +42,10 @@ export default function Signup(): ReactElement | null {
 
     const res = await authApi.signup({ username, password });
 
+    if (typeof res !== "object") {
+      return setError("მოულოდნელი შეცდომა, გთხოვთ სცადოთ თავიდან");
+    }
+
     if ("data" in res) {
       dispatch(fetchUserSuccess(res.data.user));
       saveTokens(res.data.accessToken);
