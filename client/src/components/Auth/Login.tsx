@@ -6,7 +6,7 @@ import {
   AuthReferText,
   AuthSubmitButton,
 } from "./shared";
-import { userApi } from "../../api";
+import { authApi } from "../../api";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import {
   fetchUserFailure,
@@ -33,7 +33,11 @@ export default function Login(): ReactElement | null {
     setError("");
     dispatch(fetchUserRequest());
 
-    const res = await userApi.login({ username, password });
+    const res = await authApi.login({ username, password });
+
+    if (typeof res !== "object") {
+      return setError("მოულოდნელი შეცდომა, გთხოვთ სცადოთ თავიდან");
+    }
 
     if ("data" in res) {
       dispatch(fetchUserSuccess(res.data.user));

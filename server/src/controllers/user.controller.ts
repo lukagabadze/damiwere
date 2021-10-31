@@ -1,14 +1,5 @@
 import { User } from "../models";
-import {
-  createUser,
-  getUser,
-  getUsers,
-  loginUser,
-  UserCreatePayload,
-  UserCreateResponse,
-  UserLoginPayload,
-  UserLoginResponse,
-} from "../repositories/user.repo";
+import { getUser, getUsers } from "../repositories/user.repo";
 
 export default class UserController {
   public async getUsers(): Promise<User[]> {
@@ -17,17 +8,5 @@ export default class UserController {
 
   public async getUser(userId: string): Promise<User | undefined> {
     return getUser(Number(userId));
-  }
-
-  public async createUser(
-    payload: UserCreatePayload
-  ): Promise<UserCreateResponse> {
-    return createUser(payload);
-  }
-
-  public async loginUser(
-    payload: UserLoginPayload
-  ): Promise<UserLoginResponse> {
-    return loginUser(payload);
   }
 }

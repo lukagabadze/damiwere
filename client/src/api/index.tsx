@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as userApi from "./userApi";
+import * as authApi from "./authApi";
 
 export const apiUrl = "http://localhost:8000";
 
@@ -19,4 +20,4 @@ axios.interceptors.request.use(
   }
 );
 
-export { userApi };
+export { userApi, authApi };

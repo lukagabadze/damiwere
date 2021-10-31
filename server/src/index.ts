@@ -15,9 +15,6 @@ app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 app.use(cors());
 
-// custom middleware
-app.use(checkAuth);
-
 createConnection(dbConfig)
   .then(() => {
     console.log("connected to db");
@@ -33,4 +30,8 @@ app.get("/", (_req, res) => {
   res.sendFile("index.html", { root: __dirname + "/public/views" });
 });
 
+// custom middleware
+app.use(checkAuth);
+
+// router
 app.use(Router);

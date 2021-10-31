@@ -1,5 +1,5 @@
 import { ReactElement, useRef, useState } from "react";
-import { userApi } from "../../api";
+import { authApi } from "../../api";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import {
   fetchUserFailure,
@@ -40,7 +40,7 @@ export default function Signup(): ReactElement | null {
     setError("");
     dispatch(fetchUserRequest());
 
-    const res = await userApi.signup({ username, password });
+    const res = await authApi.signup({ username, password });
 
     if ("data" in res) {
       dispatch(fetchUserSuccess(res.data.user));
