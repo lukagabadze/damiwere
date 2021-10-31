@@ -1,3 +1,4 @@
+//import { AxiosError } from "axios";
 import { User, UserAction, UserError } from ".";
 import { AppDispatch } from "..";
 import { userApi } from "../../api";
@@ -29,12 +30,17 @@ export const emptyUser = (): UserAction => {
   };
 };
 
-export async function fetchUser() {
+export const fetchUser = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(fetchUserRequest());
-    try {
-    } catch (err) {
-      //dispatch(fetchUserFailure(err));
+    const res = await userApi.getUser();
+
+    if ("data" in res) {
+      return dispatch(fetchUserSuccess(res.data));
+    } else {
+      return dispatch(fetchUserFailure(res));
     }
   };
-}
+};
+
+//export function fetchUser: ActionCreator<UserAction>() {

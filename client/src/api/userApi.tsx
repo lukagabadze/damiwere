@@ -25,11 +25,8 @@ export async function getUser(): Promise<
   try {
     const res = await axios.get<User>(`${apiUrl}/auth`);
 
-    console.log(res);
-
     return res;
   } catch (err) {
-    console.log(err);
     if (axios.isAxiosError(err)) {
       const error = err as AxiosError<UserError>;
       if (error && error.response) {

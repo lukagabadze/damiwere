@@ -1,13 +1,19 @@
 import { ReactElement, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { getUser } from "../api/userApi";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
+import { fetchUser } from "../store/user/userActions";
 import Auth from "./Auth";
 import Header from "./Header";
 
 export default function App(): ReactElement | null {
+  const userStore = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+
+  console.log(userStore);
+
   useEffect(() => {
-    getUser();
-  }, []);
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   return (
     <BrowserRouter>

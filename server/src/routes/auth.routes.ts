@@ -8,7 +8,7 @@ AuthRouter.get("/", async (_req, res) => {
   const userId = res.locals.userId;
 
   if (!userId) {
-    return res.status(404).send("Not logged in");
+    return res.status(404).send({ message: "Not logged in" });
   }
 
   try {

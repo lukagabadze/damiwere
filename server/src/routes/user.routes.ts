@@ -59,6 +59,7 @@ userRouter.post("/login", async (_req, res) => {
 
   try {
     const response = await controller.loginUser(payload);
+    console.log("user has successfully logged in");
     res.status(200).json(response);
   } catch (err: any) {
     switch (err.code) {

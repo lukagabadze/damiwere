@@ -21,7 +21,9 @@ export default function checkAuth(
 
       res.locals.userId = payload.id;
     } catch (err) {
-      console.log(err);
+      console.log("jwt is expired or invalid");
+
+      res.locals.userId = null;
     }
   }
 
