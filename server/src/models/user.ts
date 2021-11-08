@@ -10,6 +10,7 @@ import {
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Homework } from "./homework";
+import { Request } from "./request";
 
 export type PublicUserInfo = {
   id: string;
@@ -28,6 +29,9 @@ export class User {
 
   @Column()
   password!: string;
+
+  @OneToMany(() => Request, (request) => request.user)
+  requests!: Request[];
 
   @OneToMany((_type) => Homework, (homework: Homework) => homework.user)
   homeworks!: Homework[];

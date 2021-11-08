@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Request } from "./request";
 import { PublicUserInfo, User } from "./user";
 
 @Entity({ name: "homeworks" })
@@ -24,13 +25,18 @@ export class Homework {
   @Column({ nullable: true })
   fileUrl!: string;
 
-  @Column()
+  @Column({ name: "user_id" })
   userId!: number;
   @ManyToOne((_type) => User, (user: User) => user.homeworks, {
     onDelete: "SET NULL",
   })
   @JoinColumn()
   user?: PublicUserInfo;
+
+  @Column({ name: "request_id" })
+  requestId!: string;
+  @ManyToOne(() => Request, (request: Request) => request.homeworks)
+  request!: Request;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
