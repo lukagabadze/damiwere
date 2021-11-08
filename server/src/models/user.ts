@@ -1,23 +1,27 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Homework } from "./homework";
 
 export type PublicUserInfo = {
-  id: number;
+  id: string;
   username: string;
 };
 
-@Entity()
+//export type PublicUserInfo = Omit<User, "password">;
+
+@Entity({ name: "users" })
 export class User {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
   @Column()
   username!: string;
@@ -25,11 +29,17 @@ export class User {
   @Column()
   password!: string;
 
-  @OneToMany((_type) => Homework, (homework) => homework.user)
+  @OneToMany((_type) => Homework, (homework: Homework) => homework.user)
   homeworks!: Homework[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt!: Date;
+
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt!: Date;
 
   async hashPassword(plainPassword: string) {
     const saltRounds = 10;
@@ -40,7 +50,7 @@ export class User {
     return hashedPassword;
   }
 
-  generateAccessToken(id: number) {
+  generateAccessToken(id: string) {
     const JWTAccessSecret = process.env.JWT_ACCESS_SECRET;
     if (!JWTAccessSecret) {
       throw { message: "JWT access secret has not been provided" };

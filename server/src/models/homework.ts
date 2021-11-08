@@ -1,17 +1,19 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
-import { User } from "./user";
+import { PublicUserInfo, User } from "./user";
 
-@Entity()
+@Entity({ name: "homeworks" })
 export class Homework {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
   @Column()
   title!: string;
@@ -24,13 +26,18 @@ export class Homework {
 
   @Column()
   userId!: number;
-  @ManyToOne((_type) => User, (user) => user.homeworks)
+  @ManyToOne((_type) => User, (user: User) => user.homeworks, {
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
-  user!: User;
+  user?: PublicUserInfo;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
 
-  @CreateDateColumn()
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt!: Date;
+
+  @DeleteDateColumn({ name: "deleted_at" })
+  deletedAt!: Date;
 }

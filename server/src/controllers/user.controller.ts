@@ -7,6 +7,6 @@ export default class UserController {
   }
 
   public async getUser(userId: string): Promise<User | undefined> {
-    return getUser(Number(userId));
+    return getUser(userId);
   }
 }

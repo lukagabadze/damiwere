@@ -1,19 +1,19 @@
 import { getRepository } from "typeorm";
 import { Homework } from "../models";
 
-export type CreateHomeworkPayload = {
-  userId: number;
-  title: string;
-  body?: string;
-  fileUrl?: string;
-};
+export type CreateHomeworkPayload = Homework;
 
 export function getHomeworks(): Promise<Homework[]> {
   const homeworkRepository = getRepository(Homework);
-  return homeworkRepository.find();
+  const homeworks = homeworkRepository
+    .createQueryBuilder("h")
+    .leftJoinAndSelect("h.user", "user")
+    .getMany();
+
+  return homeworks;
 }
 
-export async function getHomework(id: number): Promise<Homework | undefined> {
+export async function getHomework(id: string): Promise<Homework | undefined> {
   const homeworkRepository = getRepository(Homework);
   return homeworkRepository.findOne({ id });
 }

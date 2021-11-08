@@ -21,7 +21,7 @@ export type UserLoginResponse = {
   accessToken: string;
 };
 
-export async function getUserPrivate(userId: number): Promise<User | null> {
+export async function getUserPrivate(userId: string): Promise<User | null> {
   const repository = getRepository(User);
 
   try {

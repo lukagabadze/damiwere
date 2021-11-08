@@ -11,7 +11,7 @@ import {
 
 export default class AuthController {
   public async getUserPrivate(userId: string): Promise<User | null> {
-    return getUserPrivate(parseInt(userId));
+    return getUserPrivate(userId);
   }
 
   public async createUser(

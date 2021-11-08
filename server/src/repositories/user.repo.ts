@@ -6,7 +6,7 @@ export function getUsers(): Promise<User[]> {
   return userRepository.find();
 }
 
-export function getUser(userId: number): Promise<User | undefined> {
+export function getUser(userId: string): Promise<User | undefined> {
   const userRepository = getRepository(User);
   return userRepository.findOne({ id: userId });
 }

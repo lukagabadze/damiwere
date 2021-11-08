@@ -12,7 +12,7 @@ export default class HomeworkController {
   }
 
   public getHomework(id: string): Promise<Homework | undefined> {
-    return getHomework(Number(id));
+    return getHomework(id);
   }
 
   public createHomework(payload: CreateHomeworkPayload): Promise<Homework> {
