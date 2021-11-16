@@ -22,7 +22,6 @@ export function createHomework(
   payload: CreateHomeworkPayload
 ): Promise<Homework> {
   const homeworkRepository = getRepository(Homework);
-
   const homework = new Homework();
 
   return homeworkRepository.save({ ...homework, ...payload });
