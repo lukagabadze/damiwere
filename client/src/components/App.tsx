@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { fetchUser } from "../store/user/userActions";
 import Auth from "./Auth";
 import Header from "./Header";
+import Requests from "./Requests";
 
 export default function App(): ReactElement | null {
   const userStore = useAppSelector((store) => store.user);
@@ -21,9 +22,8 @@ export default function App(): ReactElement | null {
         <Header />
 
         <Switch>
-          <Route path="/auth">
-            <Auth />
-          </Route>
+          <Route path="/auth" component={Auth} />
+          <Route path="/" component={Requests} />
         </Switch>
       </main>
     </BrowserRouter>

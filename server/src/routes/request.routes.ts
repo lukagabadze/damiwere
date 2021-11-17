@@ -39,3 +39,5 @@ requestRouter.post("/", async (_req, res) => {
     console.log(err);
   }
 });
+
+export default requestRouter;

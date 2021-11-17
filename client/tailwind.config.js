@@ -19,7 +19,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      objectPosition: ["group-hover"],
+      position: ["group-hover"],
+    },
   },
   plugins: [],
 };

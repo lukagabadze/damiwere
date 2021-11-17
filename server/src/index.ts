@@ -1,4 +1,5 @@
 import express, { Application } from "express";
+import morgan from "morgan";
 import cors from "cors";
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 app.use(cors());
+app.use(morgan("tiny"));
 
 createConnection(dbConfig)
   .then(() => {
