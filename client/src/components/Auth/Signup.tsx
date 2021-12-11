@@ -1,18 +1,19 @@
 import { ReactElement, useRef, useState } from "react";
 import { authApi } from "../../api";
+import {
+  AuthForm,
+  AuthHeader,
+  AuthReferText,
+  AuthSubmitButton,
+} from "./shared";
+import { InputRef } from "../shared/form";
+
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import {
   fetchUserFailure,
   fetchUserRequest,
   fetchUserSuccess,
 } from "../../store/user/userActions";
-import {
-  AuthForm,
-  AuthHeader,
-  AuthInput,
-  AuthReferText,
-  AuthSubmitButton,
-} from "./shared";
 import AuthError from "./shared/AuthError";
 import { saveTokens } from "./utils/saveTokens";
 
@@ -64,9 +65,9 @@ export default function Signup(): ReactElement | null {
     <AuthForm onSubmit={onSubmit}>
       <AuthHeader header="რეგისტრაცია" />
 
-      <AuthInput ref={usernameRef} placehoder="სახელი" />
-      <AuthInput ref={passwordRef} type="password" placehoder="პაროლი" />
-      <AuthInput
+      <InputRef ref={usernameRef} placehoder="სახელი" />
+      <InputRef ref={passwordRef} type="password" placehoder="პაროლი" />
+      <InputRef
         ref={passwordRepeatRef}
         type="password"
         placehoder="გაიმეორეთ პაროლი"

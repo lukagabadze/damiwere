@@ -2,10 +2,11 @@ import { ReactElement, useRef, useState } from "react";
 import {
   AuthForm,
   AuthHeader,
-  AuthInput,
   AuthReferText,
   AuthSubmitButton,
 } from "./shared";
+import { InputRef } from "../shared/form";
+
 import { authApi } from "../../api";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import {
@@ -55,8 +56,8 @@ export default function Login(): ReactElement | null {
     <AuthForm onSubmit={onSubmit}>
       <AuthHeader header="შესვლა" />
 
-      <AuthInput ref={usernameRef} placehoder="სახელი" />
-      <AuthInput ref={passwordRef} type="password" placehoder="პაროლი" />
+      <InputRef ref={usernameRef} placehoder="სახელი" />
+      <InputRef ref={passwordRef} type="password" placehoder="პაროლი" />
       <AuthError error={error} />
       <AuthSubmitButton text="შეყვანა" />
 
