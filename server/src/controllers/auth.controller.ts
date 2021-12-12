@@ -1,4 +1,4 @@
-import { User } from "../models";
+import { UserPublic } from "../models";
 import {
   createUser,
   getUserPrivate,
@@ -10,7 +10,7 @@ import {
 } from "../repositories/auth.repo";
 
 export default class AuthController {
-  public async getUserPrivate(userId: string): Promise<User | null> {
+  public async getUserPrivate(userId: string): Promise<UserPublic | null> {
     return getUserPrivate(userId);
   }
 

@@ -3,38 +3,26 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Homework } from "./homework";
-import { Request } from "./request";
+import { UserPublic } from "./userPublic";
 
-export type PublicUserInfo = {
-  id: string;
-  username: string;
-};
-
-//export type PublicUserInfo = Omit<User, "password">;
-
-@Entity({ name: "users" })
-export class User {
+@Entity({ name: "user_private" })
+export class UserPrivate {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column()
-  username!: string;
+  @OneToOne(() => UserPublic, { onDelete: "CASCADE" })
+  @JoinColumn()
+  userPublic!: UserPublic;
 
   @Column()
   password!: string;
-
-  @OneToMany(() => Request, (request) => request.user)
-  requests!: Request[];
-
-  @OneToMany((_type) => Homework, (homework: Homework) => homework.user)
-  homeworks!: Homework[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;

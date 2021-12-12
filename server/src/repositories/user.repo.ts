@@ -1,12 +1,12 @@
 import { getRepository } from "typeorm";
-import { User } from "../models";
+import { UserPublic } from "../models";
 
-export function getUsers(): Promise<User[]> {
-  const userRepository = getRepository(User);
+export function getUsers(): Promise<UserPublic[]> {
+  const userRepository = getRepository(UserPublic);
   return userRepository.find();
 }
 
-export function getUser(userId: string): Promise<User | undefined> {
-  const userRepository = getRepository(User);
+export function getUser(userId: string): Promise<UserPublic | undefined> {
+  const userRepository = getRepository(UserPublic);
   return userRepository.findOne({ id: userId });
 }

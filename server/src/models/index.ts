@@ -1,5 +1,6 @@
-import { User } from "./user";
+import { UserPrivate } from "./userPrivate";
+import { UserPublic } from "./userPublic";
 import { Homework } from "./homework";
 import { Request } from "./request";
 
-export { User, Homework, Request };
+export { UserPrivate, UserPublic, Homework, Request };

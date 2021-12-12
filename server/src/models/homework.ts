@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { Request } from "./request";
-import { PublicUserInfo, User } from "./user";
+import { UserPublic } from "./userPublic";
 
 @Entity({ name: "homeworks" })
 export class Homework {
@@ -27,11 +27,11 @@ export class Homework {
 
   @Column({ name: "user_id" })
   userId!: number;
-  @ManyToOne((_type) => User, (user: User) => user.homeworks, {
+  @ManyToOne((_type) => UserPublic, (user: UserPublic) => user.homeworks, {
     onDelete: "SET NULL",
   })
   @JoinColumn()
-  user?: PublicUserInfo;
+  user?: UserPublic;
 
   @Column({ name: "request_id" })
   requestId!: string;

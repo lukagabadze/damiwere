@@ -6,9 +6,9 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Homework } from "./homework";
-import { User } from "./user";
+import { UserPublic } from "./userPublic";
 
-@Entity()
+@Entity({ name: "requests" })
 export class Request {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
@@ -21,8 +21,8 @@ export class Request {
 
   @Column({ name: "user_id" })
   userId!: string;
-  @ManyToOne(() => User, (user) => user.requests)
-  user!: User;
+  @ManyToOne(() => UserPublic, (user) => user.requests)
+  user!: UserPublic;
 
   @OneToMany(() => Homework, (homework) => homework.request)
   homeworks!: Homework[];
